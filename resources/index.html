@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>SB SNS UI</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="app-tabs">
+        <button id="filesTab" class="tab-btn active" data-tab="files">📁 Files</button>
+        <button id="settingsTab" class="tab-btn" data-tab="settings">⚙️ Settings</button>
+        <button id="aboutTab" class="tab-btn" data-tab="about">ℹ️ About</button>
+      </div>
+
+      <main>
+        <!-- Files Tab Content -->
+        <div id="filesTabContent" class="tab-content active">
+          <div class="selection-layout">
+            <!-- Left Panel: Item Selection -->
+            <div class="selection-panel">
+              <div class="control-panel">
+                <button id="selectDirBtn" class="btn btn-primary">📁 Scan Mods</button>
+                <button id="refreshBtn" class="btn btn-secondary" disabled>🔄 Refresh</button>
+              </div>
+
+              <div id="progress" class="progress-panel" style="display: none;">
+                <div class="progress-text" id="progressText">Processing...</div>
+                <div class="progress-bar">
+                  <div id="progressFill" class="progress-fill"></div>
+                </div>
+              </div>
+
+              <!-- Character Tabs -->
+              <div class="character-tabs">
+                <button class="char-tab-btn" data-character="ALL">ALL</button>
+                <button class="char-tab-btn active" data-character="EVE">EVE</button>
+                <button class="char-tab-btn" data-character="ADAM">ADAM</button>
+                <button class="char-tab-btn" data-character="LILY">LILY</button>
+                <button class="char-tab-btn" data-character="DRONE">DRONE</button>
+              </div>
+
+              <!-- Mesh Type Filter -->
+              <div class="mesh-type-filter">
+                <button class="mesh-filter-btn active" data-mesh-type="ALL">ALL</button>
+                <button class="mesh-filter-btn" data-mesh-type="Body">BODY</button>
+                <button class="mesh-filter-btn" data-mesh-type="Face">FACE</button>
+                <button class="mesh-filter-btn" data-mesh-type="Hair">HAIR</button>
+                <button class="mesh-filter-btn" data-mesh-type="PonyTail">PONYTAIL</button>
+                <button class="mesh-filter-btn" data-mesh-type="Weapon">WEAPON</button>
+                <button class="mesh-filter-btn" data-mesh-type="Ears">EARS</button>
+                <button class="mesh-filter-btn" data-mesh-type="Eyes">EYES</button>
+              </div>
+
+              <!-- Search Box -->
+              <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Search by name or ID..." />
+                <button id="clearSearchBtn" class="clear-search-btn" style="display: none;">✕</button>
+              </div>
+
+              <!-- Character Content -->
+              <div id="characterContent" class="character-content">
+                <p class="empty-state">No files loaded. Click "Scan Mods" to load dekcns.json files.</p>
+              </div>
+
+              <!-- UserConfigs Edit Panel -->
+              <div id="userConfigsPanel" class="user-configs-panel" style="display: none;">
+                <div class="user-configs-header">
+                  <h3>⚙️ Advanced Configuration</h3>
+                  <button id="closeConfigPanelBtn" class="btn-close">✕</button>
+                </div>
+                <div id="userConfigsContent" class="user-configs-content">
+                  <!-- UserConfigs UI will be rendered here -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Panel: Selected Items -->
+            <div class="selected-panel">
+              <div class="selected-header">
+                <button id="saveSelectionBtn" class="btn btn-primary" disabled>💾 Apply Settings</button>
+              </div>
+
+              <!-- Global Options -->
+              <div class="global-options">
+                <h3>Global Options</h3>
+                <div class="option-item">
+                  <label>
+                    <input type="checkbox" id="globalEnabled" checked>
+                    <span>System Enabled</span>
+                  </label>
+                </div>
+                <div class="option-item">
+                  <label>
+                    <input type="checkbox" id="globalShowPonytail" checked>
+                    <span>Show Ponytail (Global)</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Selected Items List -->
+              <div class="selected-items-container">
+                <h3>Selected Items</h3>
+                <div id="selectedItemsList" class="selected-items-list">
+                  <p class="empty-state">No items selected</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Tab Content -->
+        <div id="aboutTabContent" class="tab-content" style="display: none;">
+          <div class="about-container">
+            <div class="about-header">
+              <h1>🎮 SB SNS UI</h1>
+              <p class="version">Version 0.0.1</p>
+            </div>
+
+            <div class="about-section">
+              <h2>📝 Description</h2>
+              <p>UI tool for managing <strong>SNS (Simple Nanosuit System)</strong> mod configurations for Stellar Blade.</p>
+              <p>Scan <code>.dekcns.json</code> mod files and generate <code>sns.settings.json</code> configuration without manual editing.</p>
+            </div>
+
+            <div class="about-section">
+              <h2>🚀 Quick Start</h2>
+              <ol>
+                <li>Go to <strong>Settings</strong> tab and configure paths</li>
+                <li>Return to <strong>Files</strong> tab and click "Scan Mods"</li>
+                <li>Select character (EVE/ADAM/LILY/DRONE)</li>
+                <li>Choose items using radio buttons and checkboxes</li>
+                <li>Adjust order and enable/disable items in the right panel</li>
+                <li>Click "Save Configuration"</li>
+                <li>Press <kbd>F9</kbd> in game to apply changes</li>
+              </ol>
+            </div>
+
+            <div class="about-section">
+              <h2>🔗 Links</h2>
+              <ul class="links-list">
+                <li>
+                  <strong>SNS Mod:</strong>
+                  <a href="#" onclick="Neutralino.os.open('https://hg.sr.ht/~vlad0337187/stellar-blade-mod-simple-nanosuit-system')">stellar-blade-mod-simple-nanosuit-system</a>
+                </li>
+                <li>
+                  <strong>CNS Mod:</strong>
+                  <a href="#" onclick="Neutralino.os.open('https://www.nexusmods.com/stellarblade/mods/1496')">Custom Nanosuit System</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="about-section">
+              <h2>👥 Credits</h2>
+              <ul>
+                <li><strong>SNS Mod:</strong> vlad0337187</li>
+                <li><strong>CNS Mod:</strong> Dekita</li>
+              </ul>
+            </div>
+
+            <div class="about-section">
+              <h2>📄 License</h2>
+              <p>BSD-3-Clause</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Tab Content -->
+        <div id="settingsTabContent" class="tab-content" style="display: none;">
+          <div class="settings-container">
+            <h2>Settings</h2>
+
+            <div class="settings-section">
+              <h3>📁 Scan Directory</h3>
+              <p class="settings-description">Directory containing *.dekcns.json mod files</p>
+              <div class="settings-input-group">
+                <input type="text" id="scanPathInput" class="settings-input" placeholder="C:\StellarBlade\SB\Content\Paks\~mods" readonly>
+                <button id="selectScanPathBtn" class="btn btn-primary">Browse...</button>
+                <button id="openScanPathBtn" class="btn btn-secondary" disabled title="Open in Explorer">📂</button>
+              </div>
+              <div class="inline-validation">
+                <span id="scanPathStatus" class="validation-status">Not set</span>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h3>💾 SNS Settings Output Path</h3>
+              <p class="settings-description">Target path for sns.settings.json file</p>
+              <div class="settings-input-group">
+                <input type="text" id="outputPathInput" class="settings-input" placeholder="C:\...\ue4ss\Mods\SNS\sns.settings.json" readonly>
+                <button id="selectOutputPathBtn" class="btn btn-primary">Browse...</button>
+                <button id="openOutputPathBtn" class="btn btn-secondary" disabled title="Open in Explorer">📂</button>
+              </div>
+              <div class="inline-validation">
+                <span id="outputPathStatus" class="validation-status">Not set</span>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h3>🚫 Exclude Folders</h3>
+              <p class="settings-description">Folder names to exclude from scanning (e.g., _disabled, backup, test). Enter folder name only, not full path.</p>
+              <div class="settings-input-group">
+                <input type="text" id="excludeFolderInput" class="settings-input" placeholder="e.g., _disabled">
+                <button id="addExcludeFolderBtn" class="btn btn-primary">Add</button>
+              </div>
+              <div id="excludeFoldersList" class="exclude-folders-list">
+                <p class="empty-state">No folders excluded</p>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h3>⚙️ Advanced Options</h3>
+              <div class="option-item">
+                <label>
+                  <input type="checkbox" id="autoReloadFlag">
+                  <span>Create reload flag file</span>
+                </label>
+                <p class="option-hint">Automatically creates sns.reload.flag file when saving configuration</p>
+              </div>
+            </div>
+
+            <div class="settings-actions">
+              <button id="saveSettingsBtn" class="btn btn-primary">💾 Save Settings</button>
+              <button id="resetSettingsBtn" class="btn btn-danger">🔄 Reset to Default</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Neutralino.js client -->
+    <script src="/js/neutralino.js"></script>
+    <!-- SQL.js library -->
+    <script src="/js/sql-wasm.js"></script>
+    <!-- App modules -->
+    <script src="/js/singleInstance.js"></script>
+    <script src="/js/db.js"></script>
+    <script src="/js/fileScanner.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/selection.js"></script>
+    <!-- Main app -->
+    <script src="/js/main.js"></script>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+  </body>
+</html>
